@@ -1,0 +1,59 @@
+<h3 class="text-center"><a routerLink="/">Gå tillbaka</a></h3>
+
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div>
+        <img [src]="recipes.imageUrl" alt="recept bild" class="img-fluid" />
+        <div class="d-flex flex-row align-items-center justify-content-between">
+          <p class="text-muted">Betyg: {{ recipes.rating }}</p>
+          <div>
+            <p class="text-muted">Tidsåtgång: {{ recipes.timeSpan }}</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="rating d-flex">
+          <input
+            [(ngModel)]="inputRating"
+            type="number"
+            min="1"
+            max="5"
+            step="0.1"
+            placeholder="Sätt betyg"
+            class="form-control"
+            style="width: 7em"
+          />
+
+          <button
+            class="btn btn-primary mx-1"
+            [disabled]="!inputRating"
+            (click)="submitRating()"
+          >
+            Skicka
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <h2 class="mb-3">{{ recipes.name }}</h2>
+      <p class="text-muted">{{ recipes.description }}</p>
+      <hr />
+      <h5>Huvud Ingredienser</h5>
+      <p class="text-muted" [innerHTML]="recipes.mainIngredients"></p>
+      <a
+        (click)="toggleVisaInformation()"
+        class="btn btn-link"
+        style="cursor: pointer"
+      >
+        {{ visaInformation ? "Dölj information" : "Gör så här" }}
+        <div *ngIf="visaInformation" class="btn">
+          <h5>Alla Ingredienser</h5>
+          <p class="text-muted">{{ recipes.ingredients }}</p>
+          <h5>Steg</h5>
+          <p class="text-muted">{{ recipes.steps }}</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,35 @@
+<div class="container card-deck mb-3 text-center" style="width: 50%">
+  <h1>Receptlistan</h1>
+  <div *ngFor="let recipe of recipes" class="my-4">
+    <div class="text-center mb-4 box-shadow">
+      <img
+        [src]="recipe.imageUrl"
+        class="img-thumbnail py-3 px-3"
+        alt="Dish Image"
+      />
+      <div class="card mt-3">
+        <div class="card-body">
+          <h3 class="mt-0 mb-1">
+            <a [routerLink]="['/recipe', recipe.id]">{{ recipe.name }}</a>
+          </h3>
+          <p>Betyg: {{ recipe.rating }}</p>
+          <p class="card-text">{{ recipe.description }}</p>
+          <ng-container *ngIf="visaIngredienser[recipe.id]">
+            <h5>Huvudingredienser</h5>
+            <p [innerHTML]="recipe.mainIngredients"></p>
+          </ng-container>
+          <a
+            href="javascript:void(0)"
+            (click)="toggleVisaIngredienser(recipe.id)"
+          >
+            {{
+              visaIngredienser[recipe.id]
+                ? "Dölj huvudingredienser"
+                : "Huvudingredienser"
+            }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
