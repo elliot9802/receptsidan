@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DishesService } from '../services/dishes.service';
 import { ActivatedRoute } from '@angular/router';
-
+import { catchError } from 'rxjs';
 @Component({
   selector: 'app-receptsidor',
   templateUrl: './receptsidor.component.html',
@@ -35,7 +35,13 @@ export class ReceptsidorComponent implements OnInit {
   submitRating(): void {
     if (this.inputRating !== null && this.recipes?.id) {
       this.dishesService
-        .submitRating(this.recipes.id.toString(), this.inputRating)
+        .submitRating(this.recipes.id, this.inputRating)
+        .pipe(
+          catchError((error: any) => {
+            alert(error.message);
+            throw error;
+          })
+        )
         .subscribe((newAverageRating: number) => {
           this.recipes.rating = newAverageRating;
         });
